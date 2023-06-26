@@ -18,7 +18,7 @@ $ conda activate attack
 The datsets and models are available in the HuggingFace transformers package.
 
 ## Training a language model
-We provide language models that are used in our attack. You can download them from [here](https://zenodo.org/record/8081629). Please unzip and copy these folders in the [`./LanguageModel`](LanguageModel). You can also use the following code to train a CLM alongside a fully connected layer:
+We provide the language models that are used in our attack. You can download them from [here](https://zenodo.org/record/8081629). Please unzip and copy these folders in the [`./LanguageModel`](LanguageModel). You can also use the following code to train a CLM alongside a fully connected layer for a new target NMT model:
 ```sh
 $ python run_clm_fc.py --model_name_or_path gpt2 --tokenizer_name Helsinki-NLP/opus-mt-en-de --dataset_name wikitext --dataset_config_name wikitext-103-raw-v1 --output_dir marian_en_de --per_device_train_batch_size=16 --per_device_eval_batch_size=16 --num_train_epochs 35 --learning_rate 1e-3
 ```
@@ -49,11 +49,11 @@ In this code, *black_model_name* determines the target NMT model and *black_targ
 
 ## Evaluating the attack performance
 
-The pickle file saved can be evaluted by the following code:
+The pickle file saved in the previous steps as the output of the attack can be evaluted by the following code:
 ```sh
 $ python EvaluateAttack.py --num_samples 1000 --target_model_name marian --target_lang fr --result_folder results --attack_type white_box --attack_alg TransFool
 ```
-This code evaluates the whitebox attack for all of the sentences and the successful ones. The performance is evaluted in terms of the average semantic similarity between the original sentences  and the adversarial, the token error rate, the success attack rate, relative decrease in translation quality, and the perplexity score of the adversarial sentences. You can change the arguments according to the attack you want to evalute.
+This code evaluates the whitebox attack for all of the sentences and the successful ones. The performance is evaluted in terms of the average semantic similarity between the original sentences  and the adversarial, the token error rate, the attack success rate, relative decrease in translation quality, and the perplexity score of the adversarial sentences. You can change the arguments of the code according to the attack you want to evalute.
 
 
 ## Citation
